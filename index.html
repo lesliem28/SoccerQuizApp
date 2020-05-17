@@ -10,20 +10,40 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <main role="main">
-            <header role="banner">
+        
+            
+            <header role="header" class="header" >
                 <section>
-                    //image of soccer ball or soccer animation
-                </section>
+                    <img src="https://cdn3.sportngin.com/attachments/photo/5865/2098/SoccerBallRainbowFlames_large.jpg" alt="Flaming Soccer Ball" class="flamingBall">
+                </section>    
                 <section>
-                    //counter and score
+                    <!--counter and score-->
+                    <section>
+                        <ul>
+                          <li class="counter">Question:
+                            <span class="questionNumber">0</span>/10</li>
+                          <li class="counter">Score:
+                            <span class="score">0</span>
+                          </li>
+                        </ul>
+                      </section>
                 </section>
             </header>
-                <section>
-                    //container for quiz to include where to begin.  Includes background picture, question, start button.
+        <main role="main">         
+            <!--container for quiz to include where to begin.  Includes background picture, question, start button.-->
+                
+
+                <section class="startContainer">
+                    <img src="https://wwsc.com.au/theme/custom/wwsc/wwsc/wwsc_ss01.jpg" alt="soccer ball on pitch" class="ballPitch">
+                    <h1>Let's Test Your Soccer Knowledge</h1> 
+                    <button class="startQuiz js-start-button">Start Quiz</button>
+                    <br>
                 </section>
+            
                 <section>
-                    
+                    <div id="quiz"></div>
+                    <button id="submit">Answer</button>
+                    <div id="results"></div>
                 </section>
         </main>
         <script
