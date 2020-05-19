@@ -13,6 +13,12 @@ body {
     text-align: center;
   }
 
+.counter {
+    font-family: fantasy;
+    color: greenyellow;
+    text-decoration: none;
+}
+
 .flamingBall {
     height: 75px;
 }

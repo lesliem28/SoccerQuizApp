@@ -110,7 +110,7 @@ const STORE = {
 }
 
 
-//this is how we get questions to work through the quiz
+//this is how you get questions to work through the quiz
 function getQuestions() {
   const quest = STORE.questions[currentQuestionIndex];
 

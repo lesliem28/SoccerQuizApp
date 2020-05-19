@@ -19,11 +19,9 @@
                 <section>
                     <!--counter and score-->
                     <section>
-                        <ul>
-                          <li class="counter">Question:
-                            <span class="questionNumber">0</span>/10</li>
-                          <li class="counter">Score:
-                            <span class="score">0</span>
+                        <ul class="counter">
+                          <li>Question: <span class="qNum">0</span>/10</li>
+                          <li>Score: <span class="numRight">0</span>
                           </li>
                         </ul>
                       </section>
@@ -40,17 +38,17 @@
                     <br>
                 </section>
             
-                <section>
-                    <div id="quiz"></div>
-                    <button id="submit">Answer</button>
-                    <div id="results"></div>
-                </section>
+                <section class="quiz js-questions"></section>
+                <section class="results"></section>
+
+                    
         </main>
         <script
   src="https://code.jquery.com/jquery-3.5.1.js"
   integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
   crossorigin="anonymous"></script>
-        <script src="main.js"></script>
+        <!--<script src="main.js"></script>-->
+        <script src="main2.js"></script>
     </body>
 </html>
 
