@@ -112,7 +112,7 @@ const STORE = {
 
 //this is how we get questions to work through the quiz
 function getQuestions() {
-  const quest = STORE.currentQuestionIndex;
+  const quest = STORE.questions[currentQuestionIndex];
 
   $("main").html(`
     <section class="quiz js-questions">
