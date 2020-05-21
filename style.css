@@ -16,7 +16,7 @@ body {
 .counter {
     font-family: fantasy;
     color: greenyellow;
-    text-decoration: none;
+    list-style: none;
 }
 
 .flamingBall {
@@ -53,9 +53,69 @@ h1 {
     border: 3px solid black; 
   }
 
-.startQuiz {
+button {
    height: 50px;
    width: 150px;   
    font-size: 20px;
    background-color:white;
+}
+
+form {
+   display: flex;
+   flex-direction: column;
+   width: 70%;
+   padding: 10%;
+   margin: auto;
+   background: #c3d82a;
+   border-radius: 10px;
+   border-color: white;
+}
+
+fieldset {
+   font-size: 18px;
+}
+
+legend {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-family: papyrus;
+    font-size: 24px;
+}
+
+#answer {
+    display: block;
+    background-color: green;
+    color: white;
+    margin: auto;
+}
+
+#right {
+    color:black;
+    width: 70%;
+   padding: 10%;
+   margin: auto;
+   background: #c3d82a;
+   border-radius: 10px;
+   border-color: white;
+}
+
+
+#next {
+    display: block;
+    background-color: white;
+    color: black;
+    margin: auto;
+}
+
+#rightAns {
+    color:black;
+    width: 70%;
+    font-size: 24px;
+   padding: 10%;
+   margin: auto;
+   text-align: center;
+   background: #c3d82a;
+   border-radius: 10px;
+   border-color: white;
 }

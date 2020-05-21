@@ -1,8 +1,10 @@
 
 //questions
 const STORE = {
-  currentQuestionIndex: 0
+  currentQuestionIndex: 0,
+  questions:
   [
+    
     {//1
       question: 'What is offsides?',
       
@@ -26,7 +28,7 @@ const STORE = {
     },
 
     { //3
-      question3: 'How many players are on the field for each team during a game?',
+      question: 'How many players are on the field for each team during a game?',
       
       answer1: '19',
       answer2: '11',
@@ -111,24 +113,24 @@ const STORE = {
 
 
 //this is how you get questions to work through the quiz
-function getQuestions() {
-  const quest = STORE.questions[currentQuestionIndex];
+function getCurrentQuestion() {
+  const quest = STORE.questions[STORE.currentQuestionIndex];
 
   $("main").html(`
     <section class="quiz js-questions">
       <form>
         <fieldset>
           <legend>${quest.question}</legend>
-          <input type="radio" id="opt1" name="answer" value="${question.answer1}">
-          <label for="opt1">${question.answer1}</label><br>
-          <input type="radio" id="opt2" name="answer" value="${question.answer2}">
-          <label for="opt2">${question.answer2}</label><br>
-          <input type="radio" id="opt3" name="answer" value="${question.answer3}">
-          <label for="opt3">${question.answer3}</label><br>
-          <input type="radio" id="opt4" name="answer" value="${question.answer4}">
-          <label for="opt4">${question.answer4}</label><br><br>
+          <input type="radio" id="opt1" name="answer" value="${quest.answer1}" required>
+          <label for="opt1">${quest.answer1}</label><br>
+          <input type="radio" id="opt2" name="answer" value="${quest.answer2}">
+          <label for="opt2">${quest.answer2}</label><br>
+          <input type="radio" id="opt3" name="answer" value="${quest.answer3}">
+          <label for="opt3">${quest.answer3}</label><br>
+          <input type="radio" id="opt4" name="answer" value="${quest.answer4}">
+          <label for="opt4">${quest.answer4}</label><br><br>
         </fieldset>
-          <button type="submit">Answer</button>
+          <button id="answer" type="submit">Next Question</button>
       </form>
     </section>
 
@@ -136,22 +138,24 @@ function getQuestions() {
 }
 
 //get correct answer and congratulate them or give correct answer
-function getAnswer(answer, correctAnswer) {
+function checkAnswer(answer, correctAnswer) {
+  //console.log($(".startContainer"));
   if (answer === correctAnswer) {
     $("main").html(`
     <section>
         <h1>You're RIGHT! You are a soccer superstar!</h1> 
         <br>
-        <button>Next Question</button>
+        <button id="next">Next Question</button>
     </section>
     `)
+    updateScore();
   } else {
     $("main").html(`
     <section>
         <h1>INCORRECT!</h1> 
-        <p>The correct answer is: ${correctAnswer}.</p)
-        <br>
-        <button>Next Question</button>
+        <p id="rightAns">The correct answer is: <br><br> ${correctAnswer} </p>
+        <br><br>
+        <button id="next">Next Question</button>
     </section>
     `)
   }
@@ -160,23 +164,89 @@ function getAnswer(answer, correctAnswer) {
 
 //
 function startQuiz () {
-  $("main").on("click", ".js-start-button", function(event) {
-    getQuestions();
+  $("body").on("click", ".startQuiz", function(event) {
+    console.log('I was clicked.');
+    let $startContainer = $(".startContainer")
+    $startContainer.html(getCurrentQuestion()); 
   });
 }
 
 
 let qNum = 0;
-let numRight = -1;
+let numRight = 0;
 
 //updates the question number you are on
 function numQuestion () {
   qNum++;
-  $(".qNum").text;
-  (qNum +1);
+  $(".qNum").text(qNum);
 }
 
-function score () {
+function updateScore () {
   numRight++;
   $(".numRight").text(numRight);
+}
+
+$( function f(){
+  startQuiz();
+  setUpClickHandlerAnswer();
+  setUpClickHandlerNext();
+  
+ } )
+
+function setUpClickHandlerAnswer () {
+  $("body").on("click", "#answer", function(event) {
+    event.preventDefault();
+    //console.log('I was clicked.');
+    let radioValue = $("input[name='answer']:checked"). val();
+    const ca = STORE.questions[STORE.currentQuestionIndex].correctAnswer;
+    checkAnswer(radioValue, ca);
+  });
+ }
+
+function setUpClickHandlerNext () {
+  $("body").on("click", "#next", function(event) {
+    event.preventDefault();
+    //console.log('I was clicked.');
+    STORE.currentQuestionIndex++;
+    //getCurrentQuestion();
+    setupLastQuestion();
+    numQuestion();     
+  });
+}
+
+
+function displayFinalResults () {
+  $("main").html(`
+    <section class="quiz js-questions">
+      <form>
+        <fieldset>
+          <legend>Your Final Score is: ${numRight}/10.</legend>
+          <p>Do you want to try again?</p>
+          <br><br>
+        </fieldset>
+          <button id="restart" type="submit">Restart Quiz</button>
+      </form>
+    </section>
+    
+  `)
+}
+
+function restartQuiz() {
+  $("main").on('click','#restart', (event) => {
+    $startContainer.html();
+  });
+}
+
+function setupLastQuestion () {
+  $("body").on("click", "#next", function(event) {
+    event.preventDefault();
+    console.log('I was clicked.');
+    if(STORE.currentQuestionIndex === STORE.questions.length) {
+      displayFinalResults();
+      restartQuiz();      
+    }else{
+      getCurrentQuestion();
+      
+    }
+  });
 }
