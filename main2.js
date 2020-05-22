@@ -220,7 +220,7 @@ function displayFinalResults () {
     <section class="quiz js-questions">
       <form id="finalResult">
         <fieldset>
-          <legend id="finalScore">Your Final Score is: ${numRight}/10</legend>
+          <legend id="finalScore">Your Final Score is: ${numRight}</legend>
           <p id="tryAgain">Do you want to try again?</p>
           <br><br>
         </fieldset>
@@ -242,12 +242,11 @@ function setupLastQuestion () {
     event.preventDefault();
     //console.log('I was clicked.');
     if(STORE.currentQuestionIndex === STORE.questions.length) {
-      updateScore();
+      //updateScore();
       displayFinalResults();
       restartQuiz();      
     }else{
       getCurrentQuestion();
-      
     }
   });
 }
