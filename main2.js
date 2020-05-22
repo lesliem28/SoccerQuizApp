@@ -105,9 +105,9 @@ const STORE = {
       answer1: 'A player gets a hand ball.',
       answer2: 'A player get called offsides.',
       answer3: 'A player kicks the ball over the goal.',
-      answer4: 'A player get a direct foul inside the box by an opposing team\'s player.',
+      answer4: 'A player gets a direct foul inside the box by an opposing team\'s player.',
     
-      correctAnswer: 'A player get a direct foul inside the box by an opposing team\'s player.'
+      correctAnswer: 'A player gets a direct foul inside the box by an opposing team\'s player.'
     }]
 }
 
@@ -122,15 +122,15 @@ function getCurrentQuestion() {
         <fieldset>
           <legend>${quest.question}</legend>
           <input type="radio" id="opt1" name="answer" value="${quest.answer1}" required>
-          <label for="opt1">${quest.answer1}</label><br>
+          <label for="opt1">${quest.answer1}</label><br><br>
           <input type="radio" id="opt2" name="answer" value="${quest.answer2}">
-          <label for="opt2">${quest.answer2}</label><br>
+          <label for="opt2">${quest.answer2}</label><br><br>
           <input type="radio" id="opt3" name="answer" value="${quest.answer3}">
-          <label for="opt3">${quest.answer3}</label><br>
+          <label for="opt3">${quest.answer3}</label><br><br>
           <input type="radio" id="opt4" name="answer" value="${quest.answer4}">
           <label for="opt4">${quest.answer4}</label><br><br>
         </fieldset>
-          <button id="answer" type="submit">Next Question</button>
+          <button id="answer" type="submit">Submit Answer</button>
       </form>
     </section>
 
@@ -238,10 +238,11 @@ function restartQuiz() {
 }
 
 function setupLastQuestion () {
-  $("body").on("click", "#next", function(event) {
+  $("body").on("click", "#next", "#restart", function(event) {
     event.preventDefault();
     //console.log('I was clicked.');
     if(STORE.currentQuestionIndex === STORE.questions.length) {
+      updateScore();
       displayFinalResults();
       restartQuiz();      
     }else{

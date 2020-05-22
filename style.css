@@ -14,9 +14,10 @@ body {
   }
 
 .counter {
-    font-family: fantasy;
+    /*font-family: fantasy;*/
     color: greenyellow;
     list-style: none;
+    padding: 0;
 }
 
 .flamingBall {
