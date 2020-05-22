@@ -118,7 +118,7 @@ function getCurrentQuestion() {
 
   $("main").html(`
     <section class="quiz js-questions">
-      <form>
+      <form id="quizQuestions">
         <fieldset>
           <legend>${quest.question}</legend>
           <input type="radio" id="opt1" name="answer" value="${quest.answer1}" required>
@@ -194,7 +194,7 @@ $( function f(){
  } )
 
 function setUpClickHandlerAnswer () {
-  $("body").on("click", "form", function(event) {
+  $("body").on("submit", "form#quizQuestions", function(event) {
     event.preventDefault();
     //console.log('I was clicked.');
     let radioValue = $("input[name='answer']:checked"). val();
@@ -218,7 +218,7 @@ function setUpClickHandlerNext () {
 function displayFinalResults () {
   $("main").html(`
     <section class="quiz js-questions">
-      <form>
+      <form id="finalResult">
         <fieldset>
           <legend id="finalScore">Your Final Score is: ${numRight}/10</legend>
           <p id="tryAgain">Do you want to try again?</p>
@@ -232,7 +232,7 @@ function displayFinalResults () {
 }
 
 function restartQuiz() {
-  $("main").on('click','#restart', (event) => {
+  $("main").on("submit","#restart", (event) => {
     $startContainer.html();
   });
 }
