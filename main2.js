@@ -165,7 +165,7 @@ function checkAnswer(answer, correctAnswer) {
 //
 function startQuiz () {
   $("body").on("click", ".startQuiz", function(event) {
-    console.log('I was clicked.');
+    //console.log('I was clicked.');
     let $startContainer = $(".startContainer")
     $startContainer.html(getCurrentQuestion()); 
   });
@@ -194,7 +194,7 @@ $( function f(){
  } )
 
 function setUpClickHandlerAnswer () {
-  $("body").on("click", "#answer", function(event) {
+  $("body").on("click", "form", function(event) {
     event.preventDefault();
     //console.log('I was clicked.');
     let radioValue = $("input[name='answer']:checked"). val();
@@ -220,8 +220,8 @@ function displayFinalResults () {
     <section class="quiz js-questions">
       <form>
         <fieldset>
-          <legend>Your Final Score is: ${numRight}/10.</legend>
-          <p>Do you want to try again?</p>
+          <legend id="finalScore">Your Final Score is: ${numRight}/10</legend>
+          <p id="tryAgain">Do you want to try again?</p>
           <br><br>
         </fieldset>
           <button id="restart" type="submit">Restart Quiz</button>
@@ -240,7 +240,7 @@ function restartQuiz() {
 function setupLastQuestion () {
   $("body").on("click", "#next", function(event) {
     event.preventDefault();
-    console.log('I was clicked.');
+    //console.log('I was clicked.');
     if(STORE.currentQuestionIndex === STORE.questions.length) {
       displayFinalResults();
       restartQuiz();      
