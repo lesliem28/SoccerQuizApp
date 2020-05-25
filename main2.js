@@ -171,7 +171,7 @@ function startQuiz () {
   });
 }
 
-
+//this is the global score
 let qNum = 0;
 let numRight = 0;
 
@@ -185,13 +185,6 @@ function updateScore () {
   numRight++;
   $(".numRight").text(numRight);
 }
-
-$( function f(){
-  startQuiz();
-  setUpClickHandlerAnswer();
-  setUpClickHandlerNext();
-  
- } )
 
 function setUpClickHandlerAnswer () {
   $("body").on("submit", "form#quizQuestions", function(event) {
@@ -220,7 +213,7 @@ function displayFinalResults () {
     <section class="quiz js-questions">
       <form id="finalResult">
         <fieldset>
-          <legend id="finalScore">Your Final Score is: ${numRight}</legend>
+          <legend id="finalScore">You got ${numRight} right?</legend>
           <p id="tryAgain">Do you want to try again?</p>
           <br><br>
         </fieldset>
@@ -250,3 +243,10 @@ function setupLastQuestion () {
     }
   });
 }
+
+
+$( function f(){
+  startQuiz();
+  setUpClickHandlerAnswer();
+  setUpClickHandlerNext();
+ } )
