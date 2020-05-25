@@ -154,6 +154,10 @@ legend {
     font-weight: bold;
 }
 
+#finalScoreResp {
+    color: black;
+}
+
 #tryAgain {
     font-size: 20px;
     text-align: -webkit-center;

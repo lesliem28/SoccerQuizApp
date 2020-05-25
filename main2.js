@@ -5,7 +5,7 @@ const STORE = {
   questions:
     [
 
-      {//1
+      { //1
         question: 'What is offsides?',
 
         answer1: 'When a player is behind their own goal.',
@@ -18,6 +18,7 @@ const STORE = {
 
       { //2
         question: 'How many points per goal?',
+
         answer1: '3',
         answer2: '7',
         answer3: '1',
@@ -111,6 +112,33 @@ const STORE = {
       }]
 }
 
+//this is the global score
+let qNum = 0;
+let numRight = 0;
+
+//updates the question number you are on
+function numQuestion() {
+  qNum++;
+  $(".qNum").text(qNum);
+}
+
+//updates the score
+function updateScore() {
+  numRight++;
+  $(".numRight").text(numRight);
+}
+
+//start handles start of quiz
+function startQuizHandler() {
+  $("body").on("click", ".startQuiz", function (event) {
+    //console.log('I was clicked.');
+    let $startContainer = $(".startContainer")
+    $startContainer.html(displayCurrentQuestion());
+    $('.qNum').text(1);
+  });
+}
+
+
 function getQuestionHTML(quest){
   return `
   <section class="quiz js-questions">
@@ -133,14 +161,13 @@ function getQuestionHTML(quest){
 }
 
 //this is how you get questions to work through the quiz
-function getCurrentQuestion() {
+function displayCurrentQuestion() {
   const quest = STORE.questions[STORE.currentQuestionIndex];
   $("main").html(getQuestionHTML(quest))
 }
 
 //get correct answer and congratulate them or give correct answer
 function checkAnswer(answer, correctAnswer) {
-  //console.log($(".startContainer"));
   if (answer === correctAnswer) {
     $("main").html(`
     <section>
@@ -163,68 +190,67 @@ function checkAnswer(answer, correctAnswer) {
 }
 
 
-//
-function startQuiz() {
-  $("body").on("click", ".startQuiz", function (event) {
-    //console.log('I was clicked.');
-    let $startContainer = $(".startContainer")
-    $startContainer.html(getCurrentQuestion());
-  });
-}
-
-//this is the global score
-let qNum = 0;
-let numRight = 0;
-
-//updates the question number you are on
-function numQuestion() {
-  qNum++;
-  console.log('qNum', qNum)
-  console.log('CQI', STORE.currentQuestionIndex + 1)
-  $(".qNum").text(STORE.currentQuestionIndex + 1);
-}
-
-function updateScore() {
-  numRight++;
-  $(".numRight").text(numRight);
-}
-
 function setUpClickHandlerAnswer() {
   $("body").on("submit", "form#quizQuestions", function (event) {
     event.preventDefault();
-    //console.log('I was clicked.');
     let radioValue = $("input[name='answer']:checked").val();
     const ca = STORE.questions[STORE.currentQuestionIndex].correctAnswer;
     checkAnswer(radioValue, ca);
   });
 }
 
+
 function setUpClickHandlerNext() {
   $("body").on("click", "#next", function (event) {
     event.preventDefault();
-    //console.log('I was clicked.');
     STORE.currentQuestionIndex++;
-    //getCurrentQuestion();
-    setupLastQuestion();
-    numQuestion();
+    if (STORE.currentQuestionIndex < STORE.questions.length) {
+      displayCurrentQuestion();
+      numQuestion();
+    } else {
+      displayFinalResults();
+      restartQuiz();
+    }
+
+    displayCurrentQuestion();
   });
 }
 
-
 function displayFinalResults() {
-  $("main").html(`
+  if (numRight === 10) {
+    $("main").html(`
     <section class="quiz js-questions">
       <form id="finalResult">
         <fieldset>
-          <legend id="finalScore">You got ${numRight} right?</legend>
-          <p id="tryAgain">Do you want to try again?</p>
+          <legend id="finalScore">You got ${numRight} right.</legend>
+          <h1 id="finalScoreResp">You did GREAT!  You know your soccer!</h1> 
+          <br>
+          <p id="tryAgain">Try again?</p>
           <br><br>
         </fieldset>
           <button id="restart" type="submit">Restart Quiz</button>
       </form>
     </section>
-    
-  `)
+    `)
+    numQuestion();
+  } else {
+    $("main").html(`
+    <section class="quiz js-questions">
+      <form id="finalResult">
+        <fieldset>
+          <legend id="finalScore">You got ${numRight} right.</legend>
+          <h1 id="finalScoreResp">You need to brush up on your soccer knowledge.</h1> 
+          <br>
+          <p id="tryAgain">Try again?</p>
+          <br><br>
+        </fieldset>
+          <button id="restart" type="submit">Restart Quiz</button>
+      </form>
+    </section>
+    `)
+    numQuestion();
+  }
+
 }
 
 function restartQuiz() {
@@ -233,23 +259,9 @@ function restartQuiz() {
   });
 }
 
-function setupLastQuestion() {
-  $("body").on("click", "#next", "#restart", function (event) {
-    event.preventDefault();
-    //console.log('I was clicked.');
-    if (STORE.currentQuestionIndex === STORE.questions.length) {
-      //updateScore();
-      displayFinalResults();
-      restartQuiz();
-    } else {
-      getCurrentQuestion();
-    }
-  });
-}
-
 
 $(function f() {
-  startQuiz();
+  startQuizHandler();
   setUpClickHandlerAnswer();
   setUpClickHandlerNext();
 })
