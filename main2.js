@@ -166,102 +166,174 @@ function displayCurrentQuestion() {
   $("main").html(getQuestionHTML(quest))
 }
 
-//get correct answer and congratulate them or give correct answer
+//response to correct answer
+function getRightAns() {
+  return `
+  <section>
+      <h1>You're RIGHT! You are a soccer superstar!</h1> 
+      <br>
+      <button id="next">Next Question</button>
+  </section>
+  `
+}
+
+//response to wrong answer with correct response included
+function getWrongAns() {
+  return `
+  <section>
+      <h1>INCORRECT!</h1> 
+      <p id="rightAns">The correct answer is: <br><br> ${correctAnswer} </p>
+      <br><br>
+      <button id="next">Next Question</button>
+  </section>
+  `
+}
+
+
+//checks if answer is correct or not
 function checkAnswer(answer, correctAnswer) {
-  if (answer === correctAnswer) {
-    $("main").html(`
-    <section>
-        <h1>You're RIGHT! You are a soccer superstar!</h1> 
-        <br>
-        <button id="next">Next Question</button>
-    </section>
-    `)
-    updateScore();
-  } else {
-    $("main").html(`
-    <section>
-        <h1>INCORRECT!</h1> 
-        <p id="rightAns">The correct answer is: <br><br> ${correctAnswer} </p>
-        <br><br>
-        <button id="next">Next Question</button>
-    </section>
-    `)
-  }
+if (answer === correctAnswer) {
+  $("main").html(getRightAns);
+      
+  /*`   
+  <section>
+      <h1>You're RIGHT! You are a soccer superstar!</h1> 
+      <br>
+      <button id="next">Next Question</button>
+  </section>
+  `)*/
+  updateScore();
+} else {
+  $("main").html(getWrongAns);
+  
+  /*
+  `
+  <section>
+      <h1>INCORRECT!</h1> 
+      <p id="rightAns">The correct answer is: <br><br> ${correctAnswer} </p>
+      <br><br>
+      <button id="next">Next Question</button>
+  </section>
+  `)*/
+}
 }
 
-
+//handles clicks for answers to questions
 function setUpClickHandlerAnswer() {
-  $("body").on("submit", "form#quizQuestions", function (event) {
-    event.preventDefault();
-    let radioValue = $("input[name='answer']:checked").val();
-    const ca = STORE.questions[STORE.currentQuestionIndex].correctAnswer;
-    checkAnswer(radioValue, ca);
-  });
+$("body").on("submit", "form#quizQuestions", function (event) {
+  event.preventDefault();
+  let radioValue = $("input[name='answer']:checked").val();
+  const ca = STORE.questions[STORE.currentQuestionIndex].correctAnswer;
+  checkAnswer(radioValue, ca);
+});
 }
 
-
+//handles clicks for next button
 function setUpClickHandlerNext() {
-  $("body").on("click", "#next", function (event) {
-    event.preventDefault();
-    STORE.currentQuestionIndex++;
-    if (STORE.currentQuestionIndex < STORE.questions.length) {
-      displayCurrentQuestion();
-      numQuestion();
-    } else {
-      displayFinalResults();
-      restartQuiz();
-    }
-
+$("body").on("click", "#next", function (event) {
+  event.preventDefault();
+  STORE.currentQuestionIndex++;
+  if (STORE.currentQuestionIndex < STORE.questions.length) {
     displayCurrentQuestion();
-  });
-}
-
-function displayFinalResults() {
-  if (numRight === 10) {
-    $("main").html(`
-    <section class="quiz js-questions">
-      <form id="finalResult">
-        <fieldset>
-          <legend id="finalScore">You got ${numRight} right.</legend>
-          <h1 id="finalScoreResp">You did GREAT!  You know your soccer!</h1> 
-          <br>
-          <p id="tryAgain">Try again?</p>
-          <br><br>
-        </fieldset>
-          <button id="restart" type="submit">Restart Quiz</button>
-      </form>
-    </section>
-    `)
     numQuestion();
   } else {
-    $("main").html(`
-    <section class="quiz js-questions">
-      <form id="finalResult">
-        <fieldset>
-          <legend id="finalScore">You got ${numRight} right.</legend>
-          <h1 id="finalScoreResp">You need to brush up on your soccer knowledge.</h1> 
-          <br>
-          <p id="tryAgain">Try again?</p>
-          <br><br>
-        </fieldset>
-          <button id="restart" type="submit">Restart Quiz</button>
-      </form>
-    </section>
-    `)
-    numQuestion();
+    displayFinalResults();
+    restartQuiz();
   }
 
+  displayCurrentQuestion();
+});
 }
 
+//response to perfect score
+function getGreatJob() {
+  return `
+  <section class="quiz js-questions">
+    <form id="finalResult">
+      <fieldset>
+        <legend id="finalScore">You got ${numRight} right.</legend>
+        <h1 id="finalScoreResp">You did GREAT!  You know your soccer!</h1> 
+        <br>
+        <p id="tryAgain">Try again?</p>
+        <br><br>
+      </fieldset>
+        <button id="restart" type="submit">Restart Quiz</button>
+    </form>
+  </section>
+  `
+}
+
+//response for any score but perfect score
+function getBadJob() {
+  return `
+  <section class="quiz js-questions">
+    <form id="finalResult">
+      <fieldset>
+        <legend id="finalScore">You got ${numRight} right.</legend>
+        <h1 id="finalScoreResp">You need to brush up on your soccer knowledge.</h1> 
+        <br>
+        <p id="tryAgain">Try again?</p>
+        <br><br>
+      </fieldset>
+        <button id="restart" type="submit">Restart Quiz</button>
+    </form>
+  </section>
+  `
+}
+
+//calculates score, provides response and try again
+function displayFinalResults() {
+if (numRight === 10) {
+  $("main").html(getGreatJob);
+  
+  /*`
+  <section class="quiz js-questions">
+    <form id="finalResult">
+      <fieldset>
+        <legend id="finalScore">You got ${numRight} right.</legend>
+        <h1 id="finalScoreResp">You did GREAT!  You know your soccer!</h1> 
+        <br>
+        <p id="tryAgain">Try again?</p>
+        <br><br>
+      </fieldset>
+        <button id="restart" type="submit">Restart Quiz</button>
+    </form>
+  </section>
+  `)*/
+  numQuestion();
+} else {
+  $("main").html(getBadJob);
+      
+  /*`
+  <section class="quiz js-questions">
+    <form id="finalResult">
+      <fieldset>
+        <legend id="finalScore">You got ${numRight} right.</legend>
+        <h1 id="finalScoreResp">You need to brush up on your soccer knowledge.</h1> 
+        <br>
+        <p id="tryAgain">Try again?</p>
+        <br><br>
+      </fieldset>
+        <button id="restart" type="submit">Restart Quiz</button>
+    </form>
+  </section>
+  `)*/
+  numQuestion();
+}
+
+}
+
+
+//restarts quiz
 function restartQuiz() {
-  $("main").on("submit", "#restart", (event) => {
-    $startContainer.html();
-  });
+$("main").on("submit", "#restart", (event) => {
+  $startContainer.html();
+});
 }
 
-
+//runs app
 $(function f() {
-  startQuizHandler();
-  setUpClickHandlerAnswer();
-  setUpClickHandlerNext();
+startQuizHandler();
+setUpClickHandlerAnswer();
+setUpClickHandlerNext();
 })
