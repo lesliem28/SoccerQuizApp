@@ -134,14 +134,13 @@ function updateScore() {
 //start handles start of quiz
 function startQuizHandler() {
   $("body").on("click", ".startQuiz", function (event) {
-    //console.log('I was clicked.');
     let $startContainer = $(".startContainer")
     $startContainer.html(displayCurrentQuestion());
     $('.qNum').text(1);
   });
 }
 
-
+//retrieves questions for HTML
 function getQuestionHTML(quest) {
   return `
   <section class="quiz js-questions">
@@ -169,12 +168,12 @@ function displayCurrentQuestion() {
   $("main").html(getQuestionHTML(quest))
 }
 
+//determines whether the quiz is completed
 function isTheQuizCompleted() {
-  console.log(`CQI`, STORE.currentQuestionIndex)
   if (STORE.currentQuestionIndex === STORE.questions.length - 1) {
-    return true
+    return true;
   }
-  return false
+    return false;
 }
 
 // returns the HTML for the next question or the results screen
@@ -202,11 +201,8 @@ function getRightAnswer() {
   `
 }
 
-
-
 //response to wrong answer with correct response included
 function getWrongAnswer() {
-
   const correctAnswer = STORE.questions[STORE.currentQuestionIndex].correctAnswer
   return `
   <section>
@@ -223,27 +219,9 @@ function getWrongAnswer() {
 function checkAnswer(answer, correctAnswer) {
   if (answer === correctAnswer) {
     $("main").html(getRightAnswer);
-
-    /*`   
-    <section>
-        <h1>You're RIGHT! You are a soccer superstar!</h1> 
-        <br>
-        <button id="next">Next Question</button>
-    </section>
-    `)*/
     updateScore();
   } else {
     $("main").html(getWrongAnswer);
-
-    /*
-    `
-    <section>
-        <h1>INCORRECT!</h1> 
-        <p id="rightAns">The correct answer is: <br><br> ${correctAnswer} </p>
-        <br><br>
-        <button id="next">Next Question</button>
-    </section>
-    `)*/
   }
 }
 
@@ -312,44 +290,13 @@ function getBadJob() {
 function displayFinalResults() {
   if (numRight === 10) {
     $("main").html(getGreatJob);
-
-    /*`
-    <section class="quiz js-questions">
-      <form id="finalResult">
-        <fieldset>
-          <legend id="finalScore">You got ${numRight} right.</legend>
-          <h1 id="finalScoreResp">You did GREAT!  You know your soccer!</h1> 
-          <br>
-          <p id="tryAgain">Try again?</p>
-          <br><br>
-        </fieldset>
-          <button id="restart" type="submit">Restart Quiz</button>
-      </form>
-    </section>
-    `)*/
     numQuestion();
   } else {
     $("main").html(getBadJob);
-
-    /*`
-    <section class="quiz js-questions">
-      <form id="finalResult">
-        <fieldset>
-          <legend id="finalScore">You got ${numRight} right.</legend>
-          <h1 id="finalScoreResp">You need to brush up on your soccer knowledge.</h1> 
-          <br>
-          <p id="tryAgain">Try again?</p>
-          <br><br>
-        </fieldset>
-          <button id="restart" type="submit">Restart Quiz</button>
-      </form>
-    </section>
-    `)*/
     numQuestion();
   }
 
 }
-
 
 //restarts quiz
 function restartQuiz() {
